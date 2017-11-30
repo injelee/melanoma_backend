@@ -1,0 +1,8 @@
+pymodm
+Flask
+numpy
+ipython
+pytest 
+pytest-cov
+pytest-pep8
+pandas

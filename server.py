@@ -1,40 +1,30 @@
-from flask import Flask, request, make_response
+from flask import Flask, request, make_response, redirect, url_for
 import base64
+
+ALLOWED_EXTENTIONS = set(['txt'])
 
 app = Flask(__name__)
 
-
-def send_error(message, code):
-    """
-
-    :param message:
-    :param code:
-    :return:
-    """
-    err = {
-        "error": message
-    }
-    return err, code
-
+def allowed_file(filename):
+    return '.' in filename and \
+filename.rsplt('.', 1)[1].lower in ALLOWED_EXTENTIONS
 
 @app.route("/image_classified_result", methods=['GET', 'POST'])
 def image_classified_result():
     if request.method == 'POST':
-       data = request.form  # base64 format data from RPi
+      if 'file' not in request.files:
+          flash('No file part')
+        return redirect(request.url)
 
-    try:
-        isinstance(data, base64)
-    except TypeError:
-        return send_error("The input is not in base64 format", 400)
-
-    try:
-        len(data) > 0 # the input image is not empty
-    except ValueError:
-        return send_error("The input is empty", 400)
-
-        image_string = base64.decodebytes(data)
-        image_result = open('decode_image.jpg', 'wb')
-        image_result.write(image_string)
+      if file.filename == '':
+          flash('No selected file')
+        return redirect(request.url)
+    if file and allowed_filename(file.filename):
+       for file in request.files:
+           data = request.files['file']
+           image_string = base64.decodebytes(data)
+           image_result = open('decode_image.jpg', 'wb')
+           image_result.write(image_string)
     #inje's class which has tensorflow
         classification  =
 

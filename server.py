@@ -1,40 +1,27 @@
-from flask import Flask, request, make_response, redirect
+from flask import Flask, request, make_response, json
 import base64
-ALLOWED_EXTENSIONS = set(['txt'])
 
 app = Flask(__name__)
-
-
-def allowed_file(filename):
-    return '.' in filename and \
-filename.rsplt('.', 1)[1].lower in ALLOWED_EXTENSIONS
 
 
 @app.route("/image_classified_result", methods=['GET', 'POST'])
 def image_classified_result():
     if request.method == 'POST':
-      if 'file' not in request.files:
-          flash('No file part')
-        return redirect(request.url)
+        data = request.json
 
-      if file.filename == '':
-          flash('No selected file')
-        return redirect(request.url)
+        for k in data.keys():
+            encodeimage = data[k]
+            image_string = base64.decodebytes(encodeimage)
+            image_result = open(data.keys[k]+'decode_image.jpg', 'wb')
+            image_result.write(image_string)
 
-    if file and allowed_filename(file.filename):
-       for file in request.files:
-           data = request.files['file']
-           image_string = base64.decodebytes(data)
-           image_result = open(filename +'decode_image.jpg', 'wb')
-           image_result.write(image_string)
-           #image_result.close()
 
     #inje's class which has tensorflow
         classification  = get_prediction(image_result)
 
     if request.method == 'GET':
         response = make_response(image_result) # get image
-        response.headers['Content-Type'] ='image/jpeg'
+        response.headers['Content-Type'] = 'image/jpeg'
         response.headers['Content-Disposition'] = 'attachment; filename = img.jpg'
         response.headers['Classification result'] = classification
         return response

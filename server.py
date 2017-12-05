@@ -11,7 +11,7 @@ def image_classified_result():
 
         for k in data.keys():
             encodeimage = data[k]
-            image_string = base64.decodebytes(encodeimage)
+            image_string = base64.decodestring(encodeimage)
             image_result = open(data.keys[k]+'decode_image.jpg', 'wb')
             image_result.write(image_string)
 

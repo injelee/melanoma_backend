@@ -1,13 +1,14 @@
-from flask import Flask, request, make_response, redirect, url_for
+from flask import Flask, request, make_response, redirect
 import base64
-
-ALLOWED_EXTENTIONS = set(['txt'])
+ALLOWED_EXTENSIONS = set(['txt'])
 
 app = Flask(__name__)
 
+
 def allowed_file(filename):
     return '.' in filename and \
-filename.rsplt('.', 1)[1].lower in ALLOWED_EXTENTIONS
+filename.rsplt('.', 1)[1].lower in ALLOWED_EXTENSIONS
+
 
 @app.route("/image_classified_result", methods=['GET', 'POST'])
 def image_classified_result():
@@ -19,14 +20,17 @@ def image_classified_result():
       if file.filename == '':
           flash('No selected file')
         return redirect(request.url)
+
     if file and allowed_filename(file.filename):
        for file in request.files:
            data = request.files['file']
            image_string = base64.decodebytes(data)
-           image_result = open('decode_image.jpg', 'wb')
+           image_result = open(filename +'decode_image.jpg', 'wb')
            image_result.write(image_string)
+           #image_result.close()
+
     #inje's class which has tensorflow
-        classification  =
+        classification  = get_prediction(image_result)
 
     if request.method == 'GET':
         response = make_response(image_result) # get image

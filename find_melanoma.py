@@ -1,4 +1,4 @@
-from bme590_melanoma_detection.get_prediction import get_prediction
+from get_prediction import get_prediction
 import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
 from pymodm import connect
@@ -13,7 +13,7 @@ class Melanoma:
     or indicative of melanoma.
     """
 
-    def __init__(self, image='/bme590_melanoma_detection/images/malignant/ISIC_0011285.jpg'):
+    def __init__(self, image='/images/malignant/ISIC_0011285.jpg'):
         self.image = image
         self.labels = []
         self.predictions = []

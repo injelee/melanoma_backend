@@ -7,7 +7,7 @@ app = Flask(__name__)
 @app.route("/image_classified_result", methods=['GET', 'POST'])
 def image_classified_result():
     if request.method == 'POST':
-        data = request.form
+        data = request.json
 
         for k in data.keys():
             encodeimage = data[k]
@@ -16,8 +16,8 @@ def image_classified_result():
             image_result.write(image_string)
 
 
-    #inje's class which has tensorflow
-        #classification  = get_prediction(image_result)
+    # inje's class which has tensorflow
+        # classification  = get_prediction(image_result)
 
     if request.method == 'GET':
         response = make_response('image1decode_image.jpg')  # get image

@@ -20,9 +20,10 @@ def image_classified_result():
         #classification  = get_prediction(image_result)
 
     if request.method == 'GET':
-        response = make_response(image_result) # get image
+        response = make_response('image1decode_image.jpg')  # get image
         response.headers['Content-Type'] = 'image/jpeg'
         response.headers['Content-Disposition'] = 'attachment; filename = img.jpg'
+
         #response.headers['Classification result'] = classification
         return response
 

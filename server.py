@@ -1,5 +1,5 @@
 from flask import Flask, request, make_response, json
-from find_melanoma import Melanoma
+#from find_melanoma import Melanoma
 import base64
 
 app = Flask(__name__)

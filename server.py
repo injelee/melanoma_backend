@@ -6,13 +6,14 @@ from pymodm import MongoModel, fields
 
 connect("mongodb://localhost:27017/bme590_mongodb")
 app = Flask(__name__)
-
+@app.route('/')
+def hello_world():
+    return 'Hello, world2'
 
 class get_patient_class(MongoModel):
     patient_id = fields.CharField()
     prediction = fields.CharField()
     # actual = fields.CharField() will add
-
 
 @app.route("/patient_classification", methods=['POST'])
 def patient_prediction():

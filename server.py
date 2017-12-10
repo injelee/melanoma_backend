@@ -8,15 +8,22 @@ app = Flask(__name__)
 @app.route("/patient_classification", methods=['POST'])
 def patient_prediction():
     data = request.json
+    prediction_result = {}
     for k in data.keys():
         encodeimage = data[k]
         image_string = base64.b64decode(encodeimage)
-        image_result = open('{}+decode_image.jpg'.format(k), 'wb')
+        image_result = open('{}_decode_image.jpg'.format(k), 'wb')
         image_result.write(image_string)
+        image_id = k
+
         #prediction = Melanoma(image=image_result)
 
         #store the <id, prediction> into MongoDB
-    print('Hello!')
+
+        # Return the id and prediction
+        new_key = '{}_prediction'.format(k)
+        new_prediction = prediction
+        prediction_result[new_key] = new_prediction
 
 
 @app.route("/image_result", methods=['GET'])

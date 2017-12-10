@@ -21,7 +21,7 @@ def patient_prediction():
     prediction_result = {}
     for k in data.keys():
         encodeimage = data[k]
-        image_string = base64.b64decode(encodeimage)
+        image_string = base64.b64decode('encodeimage')
         image_result = open('{}_decode_image.jpg'.format(k), 'wb')
         image_result.write(image_string)
         image_id = k

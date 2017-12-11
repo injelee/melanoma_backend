@@ -25,7 +25,6 @@ def patient_prediction():
         new_prediction = prediction
         prediction_result[new_key] = new_prediction
 
-
 @app.route("/image_result", methods=['GET'])
 def patient_result():
     if request.method == 'GET':

@@ -8,31 +8,37 @@ app = Flask(__name__)
 @app.route("/patient_classification", methods=['POST'])
 def patient_prediction():
     data = request.json
-    prediction_result = {}
-    for k in data.keys():
-        encodeimage = data[k]
-        image_string = base64.b64decode(encodeimage)
-        image_result = open('{}_decode_image.jpg'.format(k), 'wb')
-        image_result.write(image_string)
-        image_id = k
+
+    if 'error' not in data.keys():
+        #prediction_result = {}
+        for k in data.keys():
+            encodeimage = data[k]
+            image_string = base64.b64decode(encodeimage)
+            image_result = open('{}_decode_image.jpg'.format(k), 'wb')
+            image_result.write(image_string)
+        return 'ok'
 
         #prediction = Melanoma(image=image_result)
 
         #store the <id, prediction> into MongoDB
 
         # Return the id and prediction
-        new_key = '{}_prediction'.format(k)
-        new_prediction = prediction
-        prediction_result[new_key] = new_prediction
+        #new_key = '{}_prediction'.format(k)
+        #new_prediction = prediction
+        #prediction_result[new_key] = new_prediction
+    else:
+        error_response = data['error']
+     #    print('there is no image input.')
+        return error_response
+    
 
 @app.route("/image_result", methods=['GET'])
 def patient_result():
-    if request.method == 'GET':
-        response = make_response('image1decode_image.jpg')  # get image
-        response.headers['Content-Type'] = 'image/jpeg'
-        response.headers['Content-Disposition'] = 'attachment; filename = img.jpg'
-        response.headers['Classification result'] = prediction
-        return response
+    r = patient_prediction()
+    if r:
+        return r
+    else:
+        return 'no error'
 
 
 

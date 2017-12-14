@@ -5,6 +5,7 @@ Running method
 ===============
 The main file to run is called "main.py", the input is the images from usb and the output is the prediction value, which is 
 posted on the web server. To run this project, run docker-compose up from the root of the repository. This will start up the web service in main.py serving on port :8080. You can then edit the files in the repository, and the Flask web server will automatically reload as you make changes during development. If you want to interact with the project in an interactive iPython notebook, you should be able to click on the provided link that should appear when you run docker-compose up.
+More information about setting up the raspberry pi can be accessed on our front end repo: https://github.com/NinjMenon/bme590_melanoma_rp
 
 License
 ==============

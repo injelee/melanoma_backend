@@ -1,20 +1,20 @@
 from get_prediction import get_prediction
 import matplotlib
-matplotlib.use('Agg')
-
 import matplotlib.image as mpimg
 import numpy as np
 import matplotlib.pyplot as plt
 from pymodm import connect
 from pymodm import MongoModel, fields
 from flask import Flask, request, jsonify
+matplotlib.use('Agg')
 
 
 class Melanoma:
 
     """
-    This class takes image inputs and detects whether or not the image is a healthy cell
-    or indicative of melanoma.
+    This class takes image inputs and detects whether or not the image
+    is a healthy cell or indicative of melanoma, with probability
+    outputs.
     """
 
     def __init__(self, image='/images/malignant/ISIC_0011285.jpg'):
@@ -40,10 +40,6 @@ class Melanoma:
         else:
             prediction = 'malignant'
             probability = float(self.predictions[1])
-        prediction_dict = {'Prediction': prediction, 'Probability': probability}
+        prediction_dict = {'Prediction': prediction,
+                           'Probability': probability}
         return prediction_dict
-
-    # def store_data(self):
-
-
-

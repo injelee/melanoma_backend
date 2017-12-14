@@ -3,6 +3,7 @@ import matplotlib
 matplotlib.use('Agg')
 
 import matplotlib.image as mpimg
+import numpy as np
 import matplotlib.pyplot as plt
 from pymodm import connect
 from pymodm import MongoModel, fields
@@ -22,11 +23,25 @@ class Melanoma:
         self.predictions = []
 
     def use_tf(self):
-        img = mpimg.imread(self.image)
+        img_read = mpimg.imread(self.image)
+        image = np.array(img_read)
+        # Want to remove 4th layer in PNG files w/ transparency layers
+        if image.shape[2] > 3:
+            img = image[..., :3].shape
+        else:
+            img = img_read
         (self.labels, self.predictions) = get_prediction(img)
         print("\n\nPredictions:")
         print(self.labels)
         print(self.predictions)
+        if self.predictions[0] > self.predictions[1]:
+            prediction = 'non_malignant'
+            probability = float(self.predictions[0])
+        else:
+            prediction = 'malignant'
+            probability = float(self.predictions[1])
+        prediction_dict = {'Prediction': prediction, 'Probability': probability}
+        return prediction_dict
 
     # def store_data(self):
 

@@ -1,10 +1,11 @@
 from flask import Flask, request, make_response, jsonify
 from find_melanoma import Melanoma
 import base64
+import os
 from pymodm import connect
 from pymodm import MongoModel, fields
 
-connect("mongodb://localhost:27017/bme590_mongodb")
+connect("mongodb://vcm-2117.vm.duke.edu:27017/melanoma_db")
 app = Flask(__name__)
 
 
@@ -26,11 +27,11 @@ def patient_prediction():
     for k in data.keys():
         encodeimage = data[k]
         image_string = base64.b64decode(encodeimage)
-        image_result = open('{}_decode_image.jpg'.format(k), 'wb')
+        image_result = open('{}_decode_image.jpg'.format(k), 'r+')
         image_result.write(image_string)
         # image_id = k
-
-        prediction = Melanoma(image=image_result)
+        run_script = Melanoma(image=image_result)
+        prediction = run_script.use_tf()
 
         # store the <id, prediction> into MongoDB
 
@@ -40,8 +41,8 @@ def patient_prediction():
         prediction_result[new_key] = new_prediction
         patient_classification = get_patient_class(patient_id=data.keys,
                                                    prediction=new_prediction)
-        patient_classification.save()
-        return jsonify(patient_classification.prediction)
+        # patient_classification.save()
+        return jsonify(prediction_result)
 
 
 @app.route("/image_result/<string:patient_id>", methods=['GET'])

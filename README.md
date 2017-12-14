@@ -1,12 +1,26 @@
-# bme590_melanoma_detection
-This is the starter repository for [BME590 Medical Software Design](https://github.com/mlp6/Medical-Software-Design) [final projects](https://github.com/mlp6/Medical-Software-Design/blob/master/Assignments/final_project_fall_17/final_project_f17.pdf) for Fall 2017. This repository contains:
+# bme590 Final Project: Melanoma_Detection
+The Melanoma project aims to develop a system that takes in images of skin lesions as inputs, and outputs the likelihood that the lesion is malignant, in order to facilitate early diagnosis of melanoma. We use a Raspberry Pi to access images via USB. The images then is sent to the web service to undergo a trained classifier function which compute the likelihood that the lesion is malignant and return this percentage to the user. The image/patient ID and the prediction results are also stored in a database which can be accessed later.
 
-* Starter code and docker compose configuration to run a basic Flask webserver. A `get_prediction` module has been written to allow you to get predictions from the included melanoma classification model. 
-* Weights for a basic retrained version of inception net for classifying melanoma images. You too can retrain inception net on images by following this Google [codelab](https://codelabs.developers.google.com/codelabs/tensorflow-for-poets/#0). This will yield you new graph weights in a `.pb` file. 
+Running method
+===============
+The main file to run is called "main.py", the input is the images from usb and the output is the prediction value, which is 
+posted on the web server.
 
-## Getting Started
-An example call to the `get_prediction` module to fetch a melanoma classification for an input `(?, ?, 3) numpy.ndarray` can be seen in the iPython notebook [here](https://github.com/suyashkumar/bme590_melanoma_detection/blob/master/Example%20get_prediction.ipynb). A basic Flask web server is written in `main.py` to get you started. To run this project, run `docker-compose up` from the root of the repository. This will start up the web service in `main.py` serving on port `:8080`. You can then edit the files in the repository, and the Flask web server will automatically reload as you make changes during development. If you want to interact with the project in an interactive iPython notebook, you should be able to click on the provided link that should appear when you run `docker-compose up`. 
+If no image is stored in usb, there will be an error message returned to the raspberry pi (We hope to trigger a LED light on raspberry pi if this happens.)
 
-If you need to add any dependencies to your project, add them as a `RUN pip install ...` command in the [Dockerfile](https://github.com/suyashkumar/bme590_melanoma_detection/blob/master/Dockerfile). This is the file that is run whenever your image is compiled.
+License
+==============
+We choose to use Apache License, Version 2.0 for our project's license. Because this license provides an express grant of patent rights
+from contributors to users.
 
-To compile all containers from scratch (needed whenever the Dockerfile is changed), run `docker-compose up --build`. 
+Documentation
+==============
+The latest documentation is automatically generated using Sphinx and can be found through the link below:
+
+
+
+Contributors
+============
+Jing-Rui Li (jl714@duke.edu)
+Inje Lee (inje.lee@duke.edu)
+Niranjana Shashikumar (ns229@duke.edu)

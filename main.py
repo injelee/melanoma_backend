@@ -7,13 +7,14 @@ app = Flask(__name__)
 
 
 @app.route('/')
-def hello_world():
+def docker_status_confirmed():
     """
     Simple hello world function to test working Docker container.
-    :return: Hello World
+    :return: Status confirmation
     :rtype: str
     """
-    return 'Hello, world2'
+    return 'Congratulations! Your Docker image is fully configured ' \
+           'and ready for POSTing.'
 
 
 class get_patient_class(MongoModel):

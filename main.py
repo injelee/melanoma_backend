@@ -41,9 +41,9 @@ def patient_prediction():
         new_prediction = prediction
         prediction_result[new_key] = new_prediction
         patient_classification = get_patient_class(patient_id=new_key,
-                                                   prediction=prediction['prediction'],
-                                                   probability=prediction['probability'])
-        # patient_classification.save()
+                                                   prediction=prediction['Prediction'],
+                                                   probability=prediction['Probability'])
+        patient_classification.save()
         return jsonify(prediction_result)
 
 

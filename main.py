@@ -38,8 +38,8 @@ def patient_prediction():
         new_key = '{}_prediction'.format(k)
         new_prediction = prediction
         prediction_result[new_key] = new_prediction
-        patient_classification = get_patient_class(patient_id=data.key,
-                                                   prediction=prediction_result['new_key'])
+        patient_classification = get_patient_class(patient_id=data.keys,
+                                                   prediction=new_prediction)
         patient_classification.save()
         return jsonify(patient_classification.prediction)
 

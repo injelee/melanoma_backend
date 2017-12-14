@@ -1,4 +1,7 @@
 from get_prediction import get_prediction
+import matplotlib
+matplotlib.use('Agg')
+
 import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
 from pymodm import connect

@@ -17,6 +17,7 @@ def hello_world():
 class get_patient_class(MongoModel):
     patient_id = fields.CharField()
     prediction = fields.CharField()
+    probability = fields.CharField()
     # actual = fields.CharField() will add
 
 
@@ -39,8 +40,9 @@ def patient_prediction():
         new_key = '{}_prediction'.format(k)
         new_prediction = prediction
         prediction_result[new_key] = new_prediction
-        patient_classification = get_patient_class(patient_id=data.keys,
-                                                   prediction=new_prediction)
+        patient_classification = get_patient_class(patient_id=new_key,
+                                                   prediction=prediction['prediction'],
+                                                   probability=prediction['probability'])
         # patient_classification.save()
         return jsonify(prediction_result)
 

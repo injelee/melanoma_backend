@@ -1,6 +1,4 @@
 from flask import Flask, request, make_response, jsonify
-from find_melanoma import Melanoma
-import base64
 from pymodm import connect
 from pymodm import MongoModel, fields
 
@@ -24,6 +22,20 @@ class get_patient_class(MongoModel):
     # actual = fields.CharField() will add
 
 
+def send_error(message, code):
+    """
+    This module will be used to throw HTTPS server error codes and
+    messages when we specify them.
+    :param message: Output that user will see
+    :param code: HTTPS server error code
+    :return: jsonified version of message and code
+    """
+    err = {
+        "error": message
+    }
+    return jsonify(err), code
+
+
 @app.route("/patient_classification", methods=['POST'])
 def patient_prediction():
     """
@@ -34,20 +46,31 @@ def patient_prediction():
     :return: Prediction results from classifier.
     :rtype: dict
     """
+    from find_melanoma import Melanoma
+    import base64
+
     data = request.json
+
+    try:
+        isinstance(data, dict) is True
+    except TypeError:
+        return send_error("Input was not of type=dictionary.", 400)
+
     prediction_result = {}
     for k in data.keys():
+        # Encoding base64 string to image and saving
         encodeimage = data[k]
         image_string = base64.b64decode(encodeimage)
+        # Leave image open for processing
         image_result = open('{}_decode_image.jpg'.format(k), 'w+')
         image_result.write(image_string)
-        # image_id = k
+
+        # Using tf classifier to return id and prediction
         run_script = Melanoma(image=image_result)
         prediction = run_script.use_tf()
+        image_result.close()
 
-        # store the <id, prediction> into MongoDB
-
-        # Return the id and prediction
+        # Storing data in Mongo (WIP)
         new_key = '{}_prediction'.format(k)
         new_prediction = prediction
         prediction_result[new_key] = new_prediction
@@ -57,6 +80,7 @@ def patient_prediction():
         return jsonify(prediction_result)
 
 
+# WORK IN PROGRESS
 @app.route("/image_result/<string:patient_id>", methods=['GET'])
 def patient_result(patient_id):
     """

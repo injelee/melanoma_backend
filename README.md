@@ -1,5 +1,7 @@
 # bme590 Final Project: Melanoma_Detection
 The Melanoma project aims to develop a system that takes in images of skin lesions as inputs, and outputs the likelihood that the lesion is malignant, in order to facilitate early diagnosis of melanoma. We use a Raspberry Pi to access images via USB. The images then is sent to the web service to undergo a trained classifier function which compute the likelihood that the lesion is malignant and return this percentage to the user. The image/patient ID and the prediction results are also stored in a database which can be accessed later.
+Please refer to our final report for more details. 
+Report: https://docs.google.com/document/d/1SiJ7uANaeKdDCQd2NfZjOofposAL70jx3MNFOODZi_s/edit?usp=sharing
 
 Running method
 ===============

@@ -33,15 +33,20 @@ class Melanoma:
         else:
             img = img_read
         (self.labels, self.predictions) = get_prediction(img)
-        print("\n\nPredictions:")
-        print(self.labels)
-        print(self.predictions)
         if self.predictions[0] > self.predictions[1]:
             prediction = 'non_malignant'
+            marker = 0
             probability = float(self.predictions[0])
         else:
             prediction = 'malignant'
+            marker = 1
             probability = float(self.predictions[1])
         prediction_dict = {'Prediction': prediction,
                            'Probability': probability}
+        print("\n\nPredictions:")
+        print(prediction_dict)
+        if marker is 0:
+            print('Our classifier thinks you do not have melanoma.')
+        else:
+            print('Our classifier thinks you have melanoma.')
         return prediction_dict

@@ -10,6 +10,11 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
+    """
+    Simple hello world function to test working Docker container.
+    :return: Hello World
+    :rtype: str
+    """
     return 'Hello, world2'
 
 
@@ -21,6 +26,14 @@ class get_patient_class(MongoModel):
 
 @app.route("/patient_classification", methods=['POST'])
 def patient_prediction():
+    """
+    This posting method will post the image base64 string as a JSON dictionary,
+    and will return a dictionary that shows the ID of the image (as dictated
+    by the user in the name of the image) and will have the prediction and
+    probability of melanoma in the image.
+    :return: Prediction results from classifier.
+    :rtype: dict
+    """
     data = request.json
     prediction_result = {}
     for k in data.keys():
@@ -46,6 +59,13 @@ def patient_prediction():
 
 @app.route("/image_result/<string:patient_id>", methods=['GET'])
 def patient_result(patient_id):
+    """
+    This module will have allow the user to see the relevant patient data for
+    a specific patient ID (e.g. image filename).
+    :param patient_id: Name of the patient of interest.
+    :return: The patient ID information.
+    :rtype: dict
+    """
     # response = make_response('image1decode_image.jpg')  # get image
     # response.headers['Content-Type'] = 'image/jpeg'
     # response.headers['Content-Disposition']= 'attachment; filename = img.jpg'

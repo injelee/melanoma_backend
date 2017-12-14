@@ -15,6 +15,8 @@ class Melanoma:
     This class takes image inputs and detects whether or not the image
     is a healthy cell or indicative of melanoma, with probability
     outputs.
+    :return: The prediction information and classification
+    :rtype: dict
     """
 
     def __init__(self, image='/images/malignant/ISIC_0011285.jpg'):
